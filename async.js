@@ -13,8 +13,19 @@
 
 // A callback based function
 function do_thing_callback(timer, callback){
+    
     setTimeout( () => {
-        callback('CALLBACKS: do a thing completed!');
+
+        if(it_works){
+
+            callback(null, 'CALLBACKS: do a thing completed!');
+
+        } else {
+
+            callback( new Error('callback failed'));
+
+        }
+
     },timer);
 }
 
@@ -58,8 +69,14 @@ function do_thing_promise(timer){
 
 // normal callback call
 function callbacks(){
-    do_thing_callback(300, (value) => {
-        console.log(value)
+    do_thing_callback(300, (error, value) => {
+        if(error)
+        {
+            console.log(error.message);
+        } else {
+            console.log(value)
+        }
+        
     });
 }
 
